@@ -5,7 +5,8 @@ locals {
     { "name": "DATABASE_URL", "valueFrom": "arn:aws:ssm:us-east-1:654654463495:parameter/lks-url/db-url" },
     { "name": "PORT",         "valueFrom": "arn:aws:ssm:us-east-1:654654463495:parameter/lks-url/port-api" },
     { "name": "SQS_URL",      "valueFrom": "arn:aws:ssm:us-east-1:654654463495:parameter/lks-url/sqs-url" },
-    { "name": "BASE_URL",     "valueFrom": "arn:aws:ssm:us-east-1:654654463495:parameter/lks-url/base-url" }
+    { "name": "BASE_URL",     "valueFrom": "arn:aws:ssm:us-east-1:654654463495:parameter/lks-url/base-url" },
+    { "name": "DYNAMODB_REGION", "valueFrom": "arn:aws:ssm:us-east-1:654654463495:parameter/lks-url/dynamodb-region" }
   ]
 
   # analytics service
@@ -13,7 +14,8 @@ locals {
     { "name": "DATABASE_URL", "valueFrom": "arn:aws:ssm:us-east-1:654654463495:parameter/lks-url/db-url" },
     { "name": "PORT",         "valueFrom": "arn:aws:ssm:us-east-1:654654463495:parameter/lks-url/port-analytics" },
     { "name": "SQS_URL",      "valueFrom": "arn:aws:ssm:us-east-1:654654463495:parameter/lks-url/sqs-url" },
-    { "name": "BASE_URL",     "valueFrom": "arn:aws:ssm:us-east-1:654654463495:parameter/lks-url/base-url" }
+    { "name": "BASE_URL",     "valueFrom": "arn:aws:ssm:us-east-1:654654463495:parameter/lks-url/base-url" },
+    { "name": "DYNAMODB_REGION", "valueFrom": "arn:aws:ssm:us-east-1:654654463495:parameter/lks-url/dynamodb-region" }
   ]
 }
 
@@ -73,9 +75,6 @@ resource "aws_ecs_task_definition" "api" {
         },
         {
           "name": "DYNAMODB_TABLE", "value": var.ssm_dynamodb_table_arn
-        },
-        {
-          "name": "DYNAMODB_REGION", "value": var.ssm_dynamodb_region_arn
         },
         {
           "name": "DYNAMODB_ENDPOINT", "value": "endpoint"
