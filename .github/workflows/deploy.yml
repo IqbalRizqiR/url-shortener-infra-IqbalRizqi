@@ -1,0 +1,62 @@
+name: Provision Infra using Terraform
+
+on:
+  # TODO: REPLACE THIS WITH PROPER TRIGGER WORKFLOW
+  push:
+    branches:
+      - main
+
+jobs:
+  terraform:
+    name: Apply infrastructure
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        # TODO: FILL MISSING CONFIGURATION BELOW
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+        # TODO: FILL MISSING CONFIGURATION ABOVE
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform Init
+        run: "terraform init" # TODO: REPLACE THIS WITH MISSING COMMAND
+
+      - name: Terraform Validate
+        run: "terraform validate" # TODO: REPLACE THIS WITH MISSING COMMAND
+
+      - name: Terraform Plan
+        # TODO: FILL MISSING ENV BELOW
+        env:
+          TF_VAR_aws_account_id: ${{ secrets.AWS_ACCOUNT_ID }}
+          TF_VAR_db_password: ${{ secrets.DB_PASSWORD }}
+
+        # TODO: FILL MISSING ENV ABOVE
+        run: "terraform plan -out=tfplan" # TODO: REPLACE THIS WITH MISSING COMMAND
+
+      - name: Upload plan artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: tfplan
+          path: tfplan
+
+      - name: Terraform Apply
+        # TODO: FILL MISSING ENV ABOV
+        env:
+          TF_VAR_aws_account_id: ${{ secrets.AWS_ACCOUNT_ID }}
+          TF_VAR_db_password: ${{ secrets.DB_PASSWORD }}
+        # TODO: FILL MISSING ENV ABOVE
+        run: "terraform apply tfplan" # TODO: REPLACE THIS WITH MISSING COMMAND
+
+      - name: Show outputs
+        run: terraform output

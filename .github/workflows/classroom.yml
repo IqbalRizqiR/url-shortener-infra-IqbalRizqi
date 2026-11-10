@@ -1,0 +1,64 @@
+# WARNING: DO NOT MODIFY/EDIT/CHANGE OTHERWHISE YOU'LL LOSE YOUR POINTS
+
+name: Autograding Tests
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  checks: write
+  actions: read
+  contents: read
+
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: "[Trigger] deploy.yml"
+        id: trigger-deploy-yml
+        uses: etamu-class/autograding-command-grader@v10
+        with:
+          test-name: "[Trigger] deploy.yml"
+          setup-command: ""
+          command: ".github/scripts/check-trigger.sh deploy.yml"
+          timeout: 2
+          max-score: 40
+
+      - name: "[Secrets] AWS secrets in files + repo"
+        id: secrets-aws-secrets-in-files-repo
+        uses: etamu-class/autograding-command-grader@v10
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          test-name: "[Secrets] AWS secrets in files + repo"
+          setup-command: ""
+          command: ".github/scripts/check-secrets.sh"
+          timeout: 3
+          max-score: 30
+
+      - name: "[Run] deploy.yml succeeded"
+        id: run-deploy-yml-succeeded
+        uses: etamu-class/autograding-command-grader@v10
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          test-name: "[Run] deploy.yml succeeded"
+          setup-command: ""
+          command: ".github/scripts/check-workflow-run.sh deploy.yml"
+          timeout: 5
+          max-score: 70
+
+      - name: Autograding Reporter
+        uses: classroom-resources/autograding-grading-reporter@v1
+        env:
+          TRIGGER-DEPLOY-YML_RESULTS: "${{steps.trigger-deploy-yml.outputs.result}}"
+          SECRETS-AWS-SECRETS-IN-FILES-REPO_RESULTS: "${{steps.secrets-aws-secrets-in-files-repo.outputs.result}}"
+          RUN-DEPLOY-YML-SUCCEEDED_RESULTS: "${{steps.run-deploy-yml-succeeded.outputs.result}}"
+        with:
+          runners: trigger-deploy-yml,secrets-aws-secrets-in-files-repo,run-deploy-yml-succeeded

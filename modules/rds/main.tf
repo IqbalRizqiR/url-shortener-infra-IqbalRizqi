@@ -1,0 +1,30 @@
+# TODO: ADD MISSING VALUES TO RESOURCES BELOW
+
+locals {
+  tags = { Project = "lks-url" }
+}
+
+resource "aws_db_subnet_group" "main" {
+  name       = "lks-url-db-subnet-group"
+  subnet_ids = var.private_subnet_ids
+
+  tags = merge(local.tags, { Name = "lks-url-db-subnet-group" })
+}
+
+# TODO: ADD PROPER KEYS AND VALUES TO RESOURCE BELOW
+resource "aws_db_instance" "main" {
+  identifier = "lks-url-db"
+  allocated_storage = "20"
+  db_name = "urlshortener"
+  username = "urlshortener"
+  password = "LKS-Shortener26!"
+  publicly_accessible = false
+  storage_type = "gp3"
+  vpc_security_group_ids = [var.rds_sg_id]
+  multi_az = false
+  engine = "postgres"
+  engine_version = "17.6-R2"
+  instance_class = "t3.micro"
+  tags = merge(local.tags, { Name = "lks-url-db" })
+}
+

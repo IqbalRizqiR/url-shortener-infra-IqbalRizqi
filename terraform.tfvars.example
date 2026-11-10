@@ -1,0 +1,4 @@
+aws_account_id = ""
+aws_region     = ""
+db_username    = ""
+db_password    = ""
