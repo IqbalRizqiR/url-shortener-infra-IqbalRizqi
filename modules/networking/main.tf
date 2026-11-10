@@ -149,6 +149,16 @@ resource "aws_vpc_security_group_ingress_rule" "allow_https_alb" {
   }
 }
 
+resource "aws_vpc_security_group_egress_rule" "allow_all_traffics" {
+  security_group_id = aws_security_group.alb.id
+  cidr_ipv4 = "0.0.0.0/0"
+  ip_protocol       = "-1"
+  tags = {
+    Name = "lks-url-allowAllTraffic"
+  }
+}
+
+
 
 # TODO: ADD MISSING KEYS AND VALUES TO RESOURCE BELOW
 resource "aws_security_group" "ecs" {
@@ -191,6 +201,15 @@ resource "aws_vpc_security_group_ingress_rule" "allow_app_ecs" {
   }
 }
 
+resource "aws_vpc_security_group_egress_rule" "allow_all_traffics" {
+  security_group_id = aws_security_group.rds.id
+  cidr_ipv4 = "0.0.0.0/0"
+  ip_protocol       = "-1"
+  tags = {
+    Name = "lks-url-allowAllTraffic"
+  }
+}
+
 
 
 # TODO: ADD MISSING KEYS AND VALUES TO RESOURCE BELOW
@@ -202,13 +221,22 @@ resource "aws_security_group" "rds" {
 }
 
 resource "aws_vpc_security_group_ingress_rule" "allow_port_rds" {
-  security_group_id = aws_security_group.ecs.id
-  referenced_security_group_id = aws_security_group.alb.id
+  security_group_id = aws_security_group.rds.id
+  referenced_security_group_id = aws_security_group.ecs.id
   from_port         = 5432
   ip_protocol       = "tcp"
   to_port           = 5432
   tags = {
     Name = "lks-url-allowPostgreSQLToApps"
+  }
+}
+
+resource "aws_vpc_security_group_egress_rule" "allow_all_trafficECS" {
+  security_group_id = aws_security_group.rds.id
+  cidr_ipv4 = "0.0.0.0/0"
+  ip_protocol       = "-1"
+  tags = {
+    Name = "lks-url-allowAllTraffic"
   }
 }
 

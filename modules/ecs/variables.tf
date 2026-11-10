@@ -13,6 +13,16 @@ variable "lab_role_arn" {
   type        = string
 }
 
+variable "aws_access_key_id" {
+  description = "AWS account ID"
+  type        = string
+}
+
+variable "aws_secret_key_access" {
+  description = "AWS account ID"
+  type        = string
+}
+
 variable "cluster_name" {
   description = "ECS cluster name"
   type        = string
