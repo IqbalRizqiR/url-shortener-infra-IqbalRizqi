@@ -3,7 +3,7 @@ locals {
   api_cache_secrets = [
     {
       name      = "lks-url-api-cache-secret"
-      valueFrom = "secrets"
+      valueFrom = "arn:aws:ssm:us-east-1:654654463495:parameter/lks-url/base-url"
     },
   ]
 
@@ -12,7 +12,7 @@ locals {
   api_base_secrets = [
     {
       name      = "lks-url-api-base-secret"
-      valueFrom = "secrets"
+      valueFrom = "arn:aws:ssm:us-east-1:654654463495:parameter/lks-url/base-url"
     },
   ]
 
@@ -22,7 +22,7 @@ locals {
   analytics_secrets = [
     {
       name      = "lks-url-analytics-secret"
-      valueFrom = "secrets"
+      valueFrom = "arn:aws:ssm:us-east-1:654654463495:parameter/lks-url/base-url"
     },
   ]
 }
