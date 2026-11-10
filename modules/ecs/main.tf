@@ -1,29 +1,21 @@
 # TODO: ADD MISSING SECRETS
 locals {
-  api_cache_secrets = [
-    {
-      name      = "lks-url-api-cache-secret"
-      valueFrom = "arn:aws:ssm:us-east-1:654654463495:parameter/lks-url/base-url"
-    },
-  ]
 
 
   # api service
-  api_base_secrets = [
-    {
-      name      = "lks-url-api-base-secret"
-      valueFrom = "arn:aws:ssm:us-east-1:654654463495:parameter/lks-url/base-url"
-    },
+  api_secrets = [
+    { "name": "DATABASE_URL", "valueFrom": "arn:aws:ssm:us-east-1:654654463495:parameter/lks-url/db-url" },
+    { "name": "PORT",         "valueFrom": "arn:aws:ssm:us-east-1:654654463495:parameter/lks-url/port-api" },
+    { "name": "SQS_URL",      "valueFrom": "arn:aws:ssm:us-east-1:654654463495:parameter/lks-url/sqs-url" },
+    { "name": "BASE_URL",     "valueFrom": "arn:aws:ssm:us-east-1:654654463495:parameter/lks-url/base-url" }
   ]
-
-  api_secrets = concat(local.api_base_secrets, local.api_cache_secrets)
 
   # analytics service
   analytics_secrets = [
-    {
-      name      = "lks-url-analytics-secret"
-      valueFrom = "arn:aws:ssm:us-east-1:654654463495:parameter/lks-url/base-url"
-    },
+    { "name": "DATABASE_URL", "valueFrom": "arn:aws:ssm:us-east-1:654654463495:parameter/lks-url/db-url" },
+    { "name": "PORT",         "valueFrom": "arn:aws:ssm:us-east-1:654654463495:parameter/lks-url/port-analytics" },
+    { "name": "SQS_URL",      "valueFrom": "arn:aws:ssm:us-east-1:654654463495:parameter/lks-url/sqs-url" },
+    { "name": "BASE_URL",     "valueFrom": "arn:aws:ssm:us-east-1:654654463495:parameter/lks-url/base-url" }
   ]
 }
 
@@ -78,18 +70,6 @@ resource "aws_ecs_task_definition" "api" {
 
       # TODO: SET PROPER ENVIRONMENT
       environment = [
-        {
-          "name": "DATABASE_URL", "value": var.ssm_db_url_arn
-        },
-        {
-          "name": "SQS_URL", "value": var.ssm_sqs_url_arn
-        },
-        {
-          "name": "BASE_URL", "value": var.ssm_base_url_arn
-        },
-        {
-          "name": "PORT", "value": var.ssm_port_api_arn
-        },
         {
           "name": "APP_ENV", "value": "production"
         },
@@ -189,15 +169,6 @@ resource "aws_ecs_task_definition" "analytics" {
 
       # TODO: SET PROPER ENV
       environment = [
-        {
-          "name": "SQS_URL", "value": var.ssm_sqs_url_arn
-        },
-        {
-          "name": "DATABASE_URL", "value": var.ssm_db_url_arn
-        },
-        {
-          "name": "PORT", "value": var.ssm_port_analytics_arn
-        },
         {
           "name": "APP_ENV", "value": "production"
         },
