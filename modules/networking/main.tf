@@ -26,6 +26,7 @@ resource "aws_internet_gateway" "igw" {
 resource "aws_subnet" "public_a" {
   vpc_id = aws_vpc.main.id
   cidr_block = "172.16.1.0/24"
+  availability_zone = "us-east-1a"
   tags = merge(local.tags, { Name = "lks-url-public-subnet-a" })
 }
 
@@ -33,6 +34,7 @@ resource "aws_subnet" "public_a" {
 resource "aws_subnet" "public_b" {
   vpc_id = aws_vpc.main.id
   cidr_block = "172.16.2.0/24"
+  availability_zone = "us-east-1b"
   tags = merge(local.tags, { Name = "lks-url-public-subnet-b" })
 }
 
@@ -40,6 +42,7 @@ resource "aws_subnet" "public_b" {
 resource "aws_subnet" "private_a" {
   vpc_id = aws_vpc.main.id
   cidr_block = "172.16.11.0/24"
+  availability_zone = "us-east-1a"
   tags = merge(local.tags, { Name = "lks-url-private-subnet-a" })
 }
 
@@ -47,6 +50,7 @@ resource "aws_subnet" "private_a" {
 resource "aws_subnet" "private_b" {
   vpc_id = aws_vpc.main.id
   cidr_block = "172.16.12.0/24"
+  availability_zone = "us-east-1b"
   tags = merge(local.tags, { Name = "lks-url-private-subnet-b" })
 }
 
@@ -145,14 +149,6 @@ resource "aws_vpc_security_group_ingress_rule" "allow_https_alb" {
   }
 }
 
-resource "aws_vpc_security_group_egress_rule" "allow_all_traffic" {
-  security_group_id = aws_security_group.ecs.id
-  cidr_ipv4 = "0.0.0.0/0"
-  ip_protocol       = "-1"
-  tags = {
-    Name = "lks-url-allowAllTraffic"
-  }
-}
 
 # TODO: ADD MISSING KEYS AND VALUES TO RESOURCE BELOW
 resource "aws_security_group" "ecs" {
@@ -195,14 +191,7 @@ resource "aws_vpc_security_group_ingress_rule" "allow_app_ecs" {
   }
 }
 
-resource "aws_vpc_security_group_egress_rule" "allow_all_trafic" {
-  security_group_id = aws_security_group.ecs.id
-  cidr_ipv4 = "0.0.0.0/0"
-  ip_protocol       = "-1"
-  tags = {
-    Name = "lks-url-allowAllTraffic"
-  }
-}
+
 
 # TODO: ADD MISSING KEYS AND VALUES TO RESOURCE BELOW
 resource "aws_security_group" "rds" {
@@ -223,11 +212,4 @@ resource "aws_vpc_security_group_ingress_rule" "allow_port_rds" {
   }
 }
 
-resource "aws_vpc_security_group_egress_rule" "allow_all_traffics" {
-  security_group_id = aws_security_group.ecs.id
-  cidr_ipv4 = "0.0.0.0/0"
-  ip_protocol       = "-1"
-  tags = {
-    Name = "lks-url-allowAllTraffic"
-  }
-}
+
