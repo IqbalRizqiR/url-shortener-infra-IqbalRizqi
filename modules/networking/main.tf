@@ -63,7 +63,7 @@ resource "aws_eip" "nat" {
 }
 
 resource "aws_nat_gateway" "nat" {
-  subnet_id = aws_subnet.private_a.id
+  subnet_id = aws_subnet.public_a.id
   connectivity_type = "public"
   allocation_id = aws_eip.nat.id
   tags = merge(local.tags, { Name = "lks-url-nat" })
