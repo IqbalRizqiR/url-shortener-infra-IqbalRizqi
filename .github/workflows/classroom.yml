@@ -26,7 +26,7 @@ jobs:
         with:
           test-name: "[Trigger] deploy.yml"
           setup-command: ""
-          command: ".github/scripts/check-trigger.sh deploy.yml"
+          command: "bash .github/scripts/check-trigger.sh deploy.yml"
           timeout: 2
           max-score: 40
 
@@ -38,7 +38,7 @@ jobs:
         with:
           test-name: "[Secrets] AWS secrets in files + repo"
           setup-command: ""
-          command: ".github/scripts/check-secrets.sh"
+          command: "bash .github/scripts/check-secrets.sh"
           timeout: 3
           max-score: 30
 
@@ -50,7 +50,7 @@ jobs:
         with:
           test-name: "[Run] deploy.yml succeeded"
           setup-command: ""
-          command: ".github/scripts/check-workflow-run.sh deploy.yml"
+          command: "bash .github/scripts/check-workflow-run.sh deploy.yml"
           timeout: 5
           max-score: 70
 

@@ -149,14 +149,6 @@ resource "aws_vpc_security_group_ingress_rule" "allow_https_alb" {
   }
 }
 
-resource "aws_vpc_security_group_egress_rule" "allow_all_trafficALB" {
-  security_group_id = aws_security_group.alb.id
-  cidr_ipv4 = "0.0.0.0/0"
-  ip_protocol       = "-1"
-  tags = {
-    Name = "lks-url-allowAllTraffic"
-  }
-}
 
 
 
@@ -201,14 +193,6 @@ resource "aws_vpc_security_group_ingress_rule" "allow_app_ecs" {
   }
 }
 
-resource "aws_vpc_security_group_egress_rule" "allow_all_trafficRDS" {
-  security_group_id = aws_security_group.rds.id
-  cidr_ipv4 = "0.0.0.0/0"
-  ip_protocol       = "-1"
-  tags = {
-    Name = "lks-url-allowAllTraffic"
-  }
-}
 
 
 
@@ -230,14 +214,4 @@ resource "aws_vpc_security_group_ingress_rule" "allow_port_rds" {
     Name = "lks-url-allowPostgreSQLToApps"
   }
 }
-
-resource "aws_vpc_security_group_egress_rule" "allow_all_trafficECS" {
-  security_group_id = aws_security_group.rds.id
-  cidr_ipv4 = "0.0.0.0/0"
-  ip_protocol       = "-1"
-  tags = {
-    Name = "lks-url-allowAllTraffic"
-  }
-}
-
 
