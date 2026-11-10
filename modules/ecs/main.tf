@@ -2,7 +2,7 @@
 locals {
   api_cache_secrets = [
     {
-      name      = "lks-url-api-secret"
+      name      = "lks-url-api-cache-secret"
       valueFrom = "secrets"
     },
   ]
@@ -11,7 +11,7 @@ locals {
   # api service
   api_base_secrets = [
     {
-      name      = "lks-url-api-secret"
+      name      = "lks-url-api-base-secret"
       valueFrom = "secrets"
     },
   ]
@@ -21,7 +21,7 @@ locals {
   # analytics service
   analytics_secrets = [
     {
-      name      = "lks-url-api-secret"
+      name      = "lks-url-analytics-secret"
       valueFrom = "secrets"
     },
   ]
