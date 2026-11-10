@@ -22,6 +22,7 @@ resource "aws_db_instance" "main" {
   storage_type = "gp3"
   vpc_id = var.vpc_id
   vpc_security_group_ids = [var.rds_sg_id]
+  db_subnet_group_name = aws_db_subnet_group.main.name
   multi_az = false
   monitoring_interval = 0
   engine = "postgres"
