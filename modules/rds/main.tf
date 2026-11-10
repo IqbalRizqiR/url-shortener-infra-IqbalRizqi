@@ -22,7 +22,7 @@ resource "aws_db_instance" "main" {
   storage_type = "gp3"
   vpc_security_group_ids = [var.rds_sg_id]
   multi_az = false
-  engine = "postgres"
+  engine = "postgresql"
   engine_version = "17.6-R2"
   instance_class = "db.t3.micro"
   tags = merge(local.tags, { Name = "lks-url-db" })
