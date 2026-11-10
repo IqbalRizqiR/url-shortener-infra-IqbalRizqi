@@ -40,7 +40,7 @@ resource "aws_ssm_parameter" "base_url" {
 resource "aws_ssm_parameter" "port_api" {
   name  = "/lks-url/port-api"
   type  = "String"
-  value = "3000"
+  value = 3000
 
   tags = {
     Name    = "/lks-url/port-api"
