@@ -1,7 +1,5 @@
 # TODO: ADD MISSING SECRETS
 locals {
-
-
   # api service
   api_secrets = [
     { "name": "DATABASE_URL", "valueFrom": "arn:aws:ssm:us-east-1:654654463495:parameter/lks-url/db-url" },
@@ -177,9 +175,6 @@ resource "aws_ecs_task_definition" "analytics" {
         },
         {
           "name": "AWS_SECRET_ACCESS_KEY", "value": var.aws_secret_key_access
-        },
-        {
-          "name": "AWS_SECRET_ACCESS_KEY", "value": ""
         },
         {
           "name": "AWS_DEFAULT_REGION", "value": var.aws_region
