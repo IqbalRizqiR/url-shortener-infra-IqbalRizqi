@@ -18,3 +18,8 @@ variable "db_password" {
   type        = string
   sensitive   = true
 }
+
+variable "vpc_id" {
+  description = "VPC ID for RDS"
+  type        = string
+}

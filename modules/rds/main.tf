@@ -20,6 +20,7 @@ resource "aws_db_instance" "main" {
   password = var.db_password
   publicly_accessible = false
   storage_type = "gp3"
+  vpc_id = var.vpc_id
   vpc_security_group_ids = [var.rds_sg_id]
   multi_az = false
   monitoring_interval = 0

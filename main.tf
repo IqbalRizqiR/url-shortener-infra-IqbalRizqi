@@ -20,6 +20,7 @@ module "rds" {
   source             = "./modules/rds"
   private_subnet_ids = module.networking.private_subnet_ids
   rds_sg_id          = module.networking.rds_sg_id
+  vpc_id             = module.networking.vpc_id
   db_username        = var.db_username
   db_password        = var.db_password
 }
