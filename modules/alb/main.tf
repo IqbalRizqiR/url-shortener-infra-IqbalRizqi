@@ -109,7 +109,7 @@ resource "aws_lb_listener_rule" "analytics" {
   }
   condition {
     path_pattern {
-      values = ["/api/stats*"]
+      values = ["/api/stats/*"]
     }
   }
 }
