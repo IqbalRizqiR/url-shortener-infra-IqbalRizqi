@@ -24,7 +24,7 @@ resource "aws_db_instance" "main" {
   multi_az = false
   engine = "postgres"
   engine_version = "17.6-R2"
-  instance_class = "t3.micro"
+  instance_class = "db.t3.micro"
   tags = merge(local.tags, { Name = "lks-url-db" })
 }
 
