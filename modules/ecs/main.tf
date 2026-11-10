@@ -7,7 +7,7 @@ locals {
     { "name": "SQS_URL",      "valueFrom": "arn:aws:ssm:us-east-1:654654463495:parameter/lks-url/sqs-url" },
     { "name": "BASE_URL",     "valueFrom": "arn:aws:ssm:us-east-1:654654463495:parameter/lks-url/base-url" },
     { "name": "DYNAMODB_REGION", "valueFrom": "arn:aws:ssm:us-east-1:654654463495:parameter/lks-url/dynamodb-region" },
-    { "name": "DYNAMODB_TABLE", "value": var.ssm_dynamodb_table_arn }
+    { "name": "DYNAMODB_TABLE", "valueFrom": var.ssm_dynamodb_table_arn }
   ]
 
   # analytics service
