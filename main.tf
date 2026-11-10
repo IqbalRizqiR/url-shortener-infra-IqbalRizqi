@@ -53,6 +53,8 @@ module "ecs" {
   aws_region               = var.aws_region
   aws_account_id           = var.aws_account_id
   lab_role_arn             = local.lab_role_arn
+  aws_access_key_id        = var.aws_secret_key_access
+  aws_secret_key_access    = var.aws_secret_key_access
   cluster_name             = "lks-url-cluster"
   private_subnet_ids       = module.networking.private_subnet_ids
   ecs_sg_id                = module.networking.ecs_sg_id
